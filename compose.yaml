@@ -9,8 +9,8 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: fred@graodireto.com.br
+      MONGO_INITDB_ROOT_PASSWORD: 123Fred
 
   mongo-express:
     image: mongo-express
@@ -18,7 +18,7 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_ADMINUSERNAME: fred@graodireto.com.br
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123Fred
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
       ME_CONFIG_BASICAUTH: false
