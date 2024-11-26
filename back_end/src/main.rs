@@ -1,3 +1,5 @@
+pub mod database;
+
 use rocket::{get, launch, routes};
 
 #[get("/hello/<name>/<age>")]
@@ -6,6 +8,6 @@ fn hello(name: &str, age: u8) -> String {
 }
 
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     rocket::build().mount("/", routes![hello])
 }
