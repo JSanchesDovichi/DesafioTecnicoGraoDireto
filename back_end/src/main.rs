@@ -1,6 +1,7 @@
 pub mod database;
 pub mod controladores;
 pub mod models;
+pub mod autenticacao;
 
 use database::criar_conexao;
 use controladores::{restaurantes, cardapios};
@@ -19,4 +20,5 @@ async fn rocket() -> _ {
     .manage(database_connection)
     .mount("/restaurantes", restaurantes::rotas())
     .mount("/restaurantes", cardapios::rotas())
+    .mount("/", autenticacao::rotas())
 }
