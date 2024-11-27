@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front_end/login.dart';
-import 'package:front_end/sandbox.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:front_end/Telas/login.dart';
+import 'package:front_end/Telas/sandbox.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {

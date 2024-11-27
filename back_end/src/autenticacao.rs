@@ -1,5 +1,5 @@
 
-use rocket::{form::Form, get, http::Status, request::{FromRequest, Outcome}, routes, serde::{self, json::{self, Json, Value}}, FromForm, Request, Route, State};
+use rocket::{form::Form, post, http::Status, request::{FromRequest, Outcome}, routes, serde::{self, json::{self, Json, Value}}, FromForm, Request, Route, State};
 use rocket::serde::{Deserialize, Serialize};
 
 use crate::token::{criar_chave_hmac, criar_token, verificar_chave_jwt, JwtClaims};
@@ -18,7 +18,7 @@ pub struct Login<'r> {
     password: &'r str,
 }
 
-#[get("/login", data="<formulario>")]
+#[post("/login", data="<formulario>")]
 pub async fn login(formulario: Form<Login<'_>>) -> (Status, Option<String>) {
     let db_user = dotenv!("DB_USER");
     let db_pass = dotenv!("DB_PASS");

@@ -7,6 +7,7 @@ pub mod token;
 use database::criar_conexao;
 use controladores::{restaurantes, cardapios};
 use rocket::launch;
+use rocket_cors::{CorsOptions, AllowedOrigins};
 
 #[macro_use]
 extern crate dotenv_codegen;
@@ -17,7 +18,16 @@ async fn rocket() -> _ {
         std::process::exit(1);
     };
 
+    let mut cors_options = CorsOptions::default();
+    cors_options.allow_credentials = true;
+    cors_options.allowed_origins = AllowedOrigins::some_exact(&["http://127.0.0.1:8027"]);
+
+    let Ok(cors) = cors_options.to_cors() else {
+        std::process::exit(2);
+    };
+
     rocket::build()
+    .attach(cors)
     .manage(database_connection)
     .mount("/restaurantes", restaurantes::rotas())
     .mount("/restaurantes", cardapios::rotas())
