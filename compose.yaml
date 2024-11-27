@@ -1,5 +1,5 @@
 # Use root/example as user/password credentials
-version: '3.1'
+# version: '3.1'
 
 services:
 
@@ -9,8 +9,10 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: fred@graodireto.com.br
-      MONGO_INITDB_ROOT_PASSWORD: 123Fred
+      # MONGO_INITDB_ROOT_USERNAME: fred@graodireto.com.br
+      # MONGO_INITDB_ROOT_PASSWORD: 123Fred
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
 
   mongo-express:
     image: mongo-express
@@ -18,7 +20,10 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: fred@graodireto.com.br
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 123Fred
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      # ME_CONFIG_MONGODB_ADMINUSERNAME: fred@graodireto.com.br
+      # ME_CONFIG_MONGODB_ADMINPASSWORD: 123Fred
+      # ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASS}
+      ME_CONFIG_MONGODB_URL: mongodb://${DB_USER}:${DB_PASS}@mongo:27017/
       ME_CONFIG_BASICAUTH: false

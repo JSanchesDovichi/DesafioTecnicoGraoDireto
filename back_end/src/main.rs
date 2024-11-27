@@ -1,8 +1,8 @@
 pub mod database;
 
-use database::{criar_conexao, test_query};
-use mongodb::Database;
-use rocket::{get, launch, routes};
+use database::criar_conexao;
+use mongodb::{bson::{doc, Document}, Database};
+use rocket::{futures::StreamExt, get, launch, routes, State};
 
 #[macro_use]
 extern crate dotenv_codegen;
@@ -12,21 +12,32 @@ fn hello(name: &str, age: u8) -> String {
     format!("Hello, {} year old named {}!", age, name)
 }
 
-#[launch]
-async fn rocket() -> _ {
-    let mut database: Option<Database> = None;
-    
-    match criar_conexao().await {
-        Ok(conexao_criada) => {
-            database = Some(conexao_criada);
+#[get("/test_db")]
+pub async fn db_test(database: &State<Database>) {
+    let query = doc! {};
+
+    match database.collection::<Document>("test_col").find(query).await {
+        Ok(mut res) => {
+            while let Some(doc) = res.next().await {
+                println!("{}", doc.unwrap())
+              }
         },
         Err(e) => {
             println!("Erro: {e}");
         }
     }
+}
 
-    test_query(database.unwrap()).await;
+#[launch]
+async fn rocket() -> _ {
+    let Ok(database_connection) = criar_conexao().await else {
+        std::process::exit(1);
+    };
 
+    rocket::build()
+    .manage(database_connection)
+    .mount("/", routes![db_test])
+    .mount("/", routes![hello])
 
-    rocket::build().mount("/", routes![hello])
+    
 }
