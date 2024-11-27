@@ -3,7 +3,7 @@ use mongodb::{
 };
 use rocket::{futures::StreamExt, get, routes, serde::json::Json, Route, State};
 
-use crate::models::restaurante::Restaurante;
+use crate::{autenticacao::UsuarioLogado, models::restaurante::Restaurante};
 
 pub fn rotas() -> Vec<Route> {
     routes![listar_restaurantes]
@@ -11,6 +11,7 @@ pub fn rotas() -> Vec<Route> {
 
 #[get("/?<page>")]
 pub async fn listar_restaurantes(
+    _usuario: UsuarioLogado,
     database: &State<Database>,
     page: Option<u64>,
 ) -> Option<Json<Vec<Restaurante>>> {

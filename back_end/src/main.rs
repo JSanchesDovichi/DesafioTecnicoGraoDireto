@@ -2,6 +2,7 @@ pub mod database;
 pub mod controladores;
 pub mod models;
 pub mod autenticacao;
+pub mod token;
 
 use database::criar_conexao;
 use controladores::{restaurantes, cardapios};
