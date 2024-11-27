@@ -1,12 +1,15 @@
 import pandas as pd
 from pymongo import MongoClient
+from dotenv import dotenv_values
+
+config = dotenv_values("../.env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 # reading csv file 
 df_restaurantes = pd.read_csv("/mnt/LinuxStorage/Projetos/DesafioTecnico/datasets/restaurants.csv")
 df_cardapios = pd.read_csv("/mnt/LinuxStorage/Projetos/DesafioTecnico/datasets/restaurant-menus.csv")
 # print(df_restaurantes.columns.to_list())
 
-myclient = MongoClient("mongodb://root:example@localhost:27017/")
+myclient = MongoClient(f"mongodb://{config["DB_USER"]}:{config["DB_PASS"]}@localhost:27017/")
 mydb = myclient["desafio_tecnico"]
 tabela_restaurantes = mydb["restaurantes"]
 
@@ -24,7 +27,7 @@ for index, row in df_restaurantes.iterrows():
 
     cardapio = df_cardapios.loc[df_cardapios['restaurant_id'] == row['id']]
 
-    cardapio = cardapio.drop(columns=['restaurant_id'])
+    # cardapio = cardapio.drop(columns=['restaurant_id'])
 
     # print(cardapio.columns.to_list())
 
@@ -42,7 +45,7 @@ for index, row in df_restaurantes.iterrows():
     # print(cardapio.head())
 
     restaurante = {
-        # 'id': row['id'],
+        'id': row['id'],
         'posicao': row['position'],
         'nome': row["name"],
         'pontuacao': row["score"],
