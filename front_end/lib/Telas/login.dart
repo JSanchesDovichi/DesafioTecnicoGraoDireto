@@ -1,11 +1,34 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/DAO/Usuario.dart';
+import 'package:front_end/Telas/detalhes_restaurante.dart';
+import 'package:front_end/Telas/restaurantes.dart';
 import 'package:front_end/Utils/Crypto.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Utils/result.dart';
 import 'package:front_end/Widgets/input.dart';
-import 'package:go_router/go_router.dart';
+import 'package:front_end/Widgets/transition.dart';
+
+/*
+Route _RouteTransition() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const ListaRestaurantes(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+*/
 
 class Login extends StatelessWidget {
   /// Constructs a [MyApp]
@@ -22,7 +45,8 @@ class Login extends StatelessWidget {
       await Resources.storage.write(key: 'jwt_token', value: token);
 
       if (await Resources.storage.read(key: 'jwt_token') != null) {
-        context.go('/restaurantes');
+        //context.go('/restaurantes');
+        Navigator.of(context).push(DefaultRouteTransition(ListaRestaurantes()));
       }
     }
 

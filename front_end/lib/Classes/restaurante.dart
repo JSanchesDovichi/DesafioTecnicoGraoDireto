@@ -13,6 +13,9 @@
     },
 */
 
+import 'package:front_end/DAO/restaurantes.dart';
+import 'package:front_end/Utils/result.dart';
+
 class Restaurante {
   final int id;
   final int posicao;
@@ -45,9 +48,10 @@ class RepositorioRestaurantes {
   static final RepositorioRestaurantes _singleton =
       RepositorioRestaurantes._internal();
 
-  List<Restaurante>? listaRestaurantes;
+  static List<Restaurante> listaRestaurantes = [];
 
   factory RepositorioRestaurantes() {
+    //init();
     return _singleton;
   }
 

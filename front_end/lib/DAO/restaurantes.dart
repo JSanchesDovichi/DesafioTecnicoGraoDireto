@@ -4,7 +4,7 @@ import 'package:front_end/Utils/connection.dart';
 import 'package:front_end/Utils/result.dart';
 
 class RestauranteDAO {
-  Future<Result<List<Restaurante>, Exception>> buscarRestaurantes() async {
+  Future<Result<bool, Exception>> buscarRestaurantes() async {
     try {
       Response response = await Connection.handler.get('/restaurantes');
 
@@ -17,7 +17,15 @@ class RestauranteDAO {
         }
       }
 
-      return Success(listaRestaurantesEncontrados);
+      //return Success(listaRestaurantesEncontrados);
+      RepositorioRestaurantes.listaRestaurantes
+          .addAll(listaRestaurantesEncontrados);
+
+      if (RepositorioRestaurantes.listaRestaurantes.isNotEmpty) {
+        return const Success(true);
+      } else {
+        return const Success(false);
+      }
     } on DioException catch (e) {
       return Failure(e);
     }

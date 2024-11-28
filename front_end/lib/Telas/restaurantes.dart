@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/Classes/restaurante.dart';
 import 'package:front_end/DAO/restaurantes.dart';
+import 'package:front_end/Telas/detalhes_restaurante.dart';
 import 'package:front_end/Utils/result.dart';
+import 'package:front_end/Widgets/transition.dart';
+import 'package:front_end/main.dart';
 
 class ListaRestaurantes extends StatefulWidget {
   const ListaRestaurantes({super.key});
@@ -10,18 +13,70 @@ class ListaRestaurantes extends StatefulWidget {
   State<ListaRestaurantes> createState() => _ListaRestaurantesState();
 }
 
+String? caixaPesquisa;
+
+Widget montarListaRestaurantes() {
+  /*
+  if (RepositorioRestaurantes.listaRestaurantes.isEmpty) {
+    RestauranteDAO().buscarRestaurantes().then((resposta) => {
+          switch (resposta) {
+            Success<bool, Exception>(value: final listaEncontrada) =>
+              RepositorioRestaurantes.listaRestaurantes.addAll(listaEncontrada),
+            Failure<bool, Exception>() => throw UnimplementedError(),
+          }
+        });
+  }
+  */
+
+  return ListView.builder(
+      itemCount: RepositorioRestaurantes.listaRestaurantes.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          child: Card(
+            child: Text(
+                "${RepositorioRestaurantes.listaRestaurantes[index].nome}"),
+          ),
+          onTap: () {
+            print(
+                "Buscar cardápio do restaurante ${RepositorioRestaurantes.listaRestaurantes[index].id}");
+
+            Navigator.of(context)
+                .push(DefaultRouteTransition(DetalhesRestaurante()));
+          },
+        );
+
+        /*
+        return Card(
+            child: Icon(
+          Icons.ac_unit_sharp,
+          color: Colors.red,
+        ));
+        */
+      });
+}
+
+Widget buscadorRestaurantes() {
+  return FutureBuilder(
+      future: RestauranteDAO().buscarRestaurantes(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.done) {
+          return montarListaRestaurantes();
+        }
+
+        /// handles others as you did on question
+        else {
+          return CircularProgressIndicator();
+        }
+      });
+}
+
 class _ListaRestaurantesState extends State<ListaRestaurantes> {
   @override
   Widget build(BuildContext context) {
-    RestauranteDAO().buscarRestaurantes().then((resposta) => {
-          switch (resposta) {
-            Success<List<Restaurante>, Exception>(value: final token) => {
-                print(token)
-              },
-            Failure<List<Restaurante>, Exception>(exception: final excecao) =>
-              print("Ocorreu um erro: $excecao"),
-          }
-        });
-    return const CircularProgressIndicator();
+    return MaterialApp(
+        home: Scaffold(
+      body: buscadorRestaurantes(),
+    ));
   }
 }
