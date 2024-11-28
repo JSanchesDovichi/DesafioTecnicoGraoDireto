@@ -5,6 +5,7 @@ import 'package:front_end/Utils/Crypto.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Utils/result.dart';
 import 'package:front_end/Widgets/input.dart';
+import 'package:go_router/go_router.dart';
 
 class Login extends StatelessWidget {
   /// Constructs a [MyApp]
@@ -17,15 +18,24 @@ class Login extends StatelessWidget {
     final controllerCaixaEmail = TextEditingController();
     final controllerCaixaSenha = TextEditingController();
 
+    verificarTokenERedirecionar(String token) async {
+      await Resources.storage.write(key: 'jwt_token', value: token);
+
+      if (await Resources.storage.read(key: 'jwt_token') != null) {
+        context.go('/restaurantes');
+      }
+    }
+
+    /*
     verificarResposta(Response? resposta) async {
       if (resposta != null && resposta.statusCode == 200) {
         await Resources.storage
             .write(key: 'jwt_token', value: resposta.data["token"]);
 
-        //ref.refresh(infoUsuarioProvider.future);
-        //ref.invalidate(infoUsuarioProvider);
-
-        Resources.navigatorKey.currentState?.pushNamed('/dashboard');
+        if (await Resources.storage.read(key: 'jwt_token') != null) {
+          //Resources.navigatorKey.currentContext!.go('/restaurantes');
+          context.go('/restaurantes');
+        }
       } else {
         //TODO: Mostrar erro!
         /*
@@ -41,6 +51,7 @@ class Login extends StatelessWidget {
         */
       }
     }
+    */
 
     enviarDadosLogin() async {
       //pega os dados da struct map
@@ -56,8 +67,7 @@ class Login extends StatelessWidget {
           UsuarioDAO().login(test).then((resposta) async => {
                 switch (resposta) {
                   Success<String, Exception>(value: final token) => {
-                      await Resources.storage
-                          .write(key: 'jwt_token', value: token)
+                      await verificarTokenERedirecionar(token)
                     },
                   Failure<String, Exception>(exception: final excecao) =>
                     print("Ocorreu um erro: $excecao"),

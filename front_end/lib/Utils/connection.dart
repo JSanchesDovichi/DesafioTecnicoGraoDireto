@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
 import 'package:front_end/Utils/global_resources.dart';
+import 'dart:convert';
 
 const endpointurl = 'http://127.0.0.1:8000';
 
@@ -13,7 +14,7 @@ class Connection {
             (RequestOptions options, RequestInterceptorHandler handler) async {
           options.extra["withCredentials"] = true;
 
-          String? token = await Resources.storage.read(key: 'auth_token');
+          String? token = await Resources.storage.read(key: 'jwt_token');
 
           if (token != null) {
             options.headers["Authorization"] = token;

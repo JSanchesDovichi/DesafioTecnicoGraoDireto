@@ -1,4 +1,5 @@
 
+use base64::{prelude::BASE64_URL_SAFE, Engine};
 use rocket::{form::Form, post, http::Status, request::{FromRequest, Outcome}, routes, serde::{self, json::{self, Json, Value}}, FromForm, Request, Route, State};
 use rocket::serde::{Deserialize, Serialize};
 
@@ -8,6 +9,7 @@ pub fn rotas() -> Vec<Route> {
     routes![login]
 }
 
+#[derive(Debug)]
 pub struct UsuarioLogado {
     email: String
 }
@@ -41,6 +43,8 @@ pub async fn login(formulario: Form<Login<'_>>) -> (Status, Option<String>) {
 
         let token_str = token.as_str();
 
+        //let token_encodificada = BASE64_URL_SAFE.encode(token_str);
+
         let resposta = Some(token_str.to_owned());
     
         return (Status::Ok, resposta);
@@ -69,13 +73,7 @@ impl<'operacao> FromRequest<'operacao> for UsuarioLogado {
             return Outcome::Error((Status::Unauthorized, ErroAutenticacao::AreaProibida));
         };
 
-        /*
-        let Some(token) = request.cookies().get_private("auth_token") else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::AreaProibida));
-        };
-        */
-
-        let token_jwt = header_authorization.replace("Bearer ", "");
+        let token_jwt = header_authorization.replace("Bearer", "");
 
         let Ok(chave_hmac) = criar_chave_hmac() else {
             return Outcome::Error((
@@ -106,104 +104,5 @@ impl<'operacao> FromRequest<'operacao> for UsuarioLogado {
         
 
         return Outcome::Success(resultado);
-
-        /*
-        let Some(header_authorization) = request.headers().get_one("Authorization") else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::AreaProibida));
-        };
-
-        /*
-        let Some(token) = request.cookies().get_private("auth_token") else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::AreaProibida));
-        };
-        */
-
-        let token_jwt = header_authorization.replace("Bearer ", "");
-
-        let Ok(chave_hmac) = criar_chave_hmac() else {
-            return Outcome::Failure((
-                Status::Unauthorized,
-                ErroAutenticacao::TamanhoTokenInvalida,
-            ));
-        };
-
-        let processo_token_jwt = verificar_chave_jwt(token_jwt.as_str(), chave_hmac);
-
-        if let Err(e) = processo_token_jwt {
-            return Outcome::Failure((
-                Status::Unauthorized,
-                ErroAutenticacao::DesconhecidoJwt(e),
-            ));
-        }
-
-        let Ok(token) = processo_token_jwt else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::Desconhecido));
-        };
-
-        let claims = token.claims();
-
-        let owned_email = claims.email.to_owned();
-
-        let owned_nome_completo = claims.nome_completo.to_owned();
-        
-        let Ok(owned_nivel) = NivelUsuario::from_str(claims.privilegios.to_string().as_str()) else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::ConversaoNivel));
-        };
-        
-        
-        let resultado = Usuario {
-            endereco_email:  owned_email,
-            nome_completo: owned_nome_completo,
-            nivel_privilegios: owned_nivel
-        };
-        
-
-        return Outcome::Success(resultado);
-        */
-
-        /*
-        let Some(header_authorization) = request.headers().get_one("Authorization") else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::AreaProibida));
-        };
-
-        let token_jwt = header_authorization.replace("Bearer ", "");
-
-        let Ok(chave_hmac) = criar_chave_hmac() else {
-            return Outcome::Failure((
-                Status::Unauthorized,
-                ErroAutenticacao::TamanhoTokenInvalida,
-            ));
-        };
-
-        let processo_token_jwt = verificar_chave_jwt(token_jwt.as_str(), chave_hmac);
-
-        if let Err(e) = processo_token_jwt {
-            return Outcome::Failure((
-                Status::Unauthorized,
-                ErroAutenticacao::DesconhecidoJwt(e),
-            ));
-        }
-
-        let Ok(token) = processo_token_jwt else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::Desconhecido));
-        };
-
-        let claims = token.claims();
-
-        let owned_email = claims.email.to_owned();
-        
-        let Ok(owned_nivel) = NivelUsuario::from_str(claims.privilegios.to_string().as_str()) else {
-            return Outcome::Failure((Status::Unauthorized, ErroAutenticacao::ConversaoNivel));
-        };
-        
-        
-        let resultado = Usuario {
-            endereco_email:  owned_email,
-            nivel_privilegios: owned_nivel
-        };
-        
-
-        return Outcome::Success(resultado);
-        */
     }
 }
