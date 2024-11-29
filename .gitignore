@@ -1,4 +1,4 @@
-datasets
+dataset_importer/datasets
 restaurantes-export.json
 back_end/target
 .env
