@@ -16,18 +16,6 @@ class ListaRestaurantes extends StatefulWidget {
 String? caixaPesquisa;
 
 Widget montarListaRestaurantes() {
-  /*
-  if (RepositorioRestaurantes.listaRestaurantes.isEmpty) {
-    RestauranteDAO().buscarRestaurantes().then((resposta) => {
-          switch (resposta) {
-            Success<bool, Exception>(value: final listaEncontrada) =>
-              RepositorioRestaurantes.listaRestaurantes.addAll(listaEncontrada),
-            Failure<bool, Exception>() => throw UnimplementedError(),
-          }
-        });
-  }
-  */
-
   return ListView.builder(
       itemCount: RepositorioRestaurantes.listaRestaurantes.length,
       itemBuilder: (context, index) {
@@ -41,7 +29,10 @@ Widget montarListaRestaurantes() {
                 "Buscar cardápio do restaurante ${RepositorioRestaurantes.listaRestaurantes[index].id}");
 
             Navigator.of(context)
-                .push(DefaultRouteTransition(DetalhesRestaurante()));
+                .push(DefaultRouteTransition(DetalhesRestaurante(
+              idRestaurante:
+                  RepositorioRestaurantes.listaRestaurantes[index].id,
+            )));
           },
         );
 
