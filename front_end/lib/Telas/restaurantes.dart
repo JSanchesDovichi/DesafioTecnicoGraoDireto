@@ -16,22 +16,49 @@ class ListaRestaurantes extends StatefulWidget {
 String? caixaPesquisa;
 
 Widget montarListaRestaurantes() {
+  //List<String> items = List<String>.generate(2, (i) => 'Item $i');
+
+  /*
+  return ListView.separated(
+      itemBuilder: (context, index) {
+        return Text(index.toString());
+      },
+      separatorBuilder: (context, index) => VerticalDivider(),
+      itemCount: 5);
+  */
+
+  /*
   return ListView.builder(
-      itemCount: RepositorioRestaurantes.listaRestaurantes.length,
+    itemCount: items.length,
+    prototypeItem: ListTile(
+      title: Text(items.first),
+    ),
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text(items[index]),
+      );
+    },
+  );
+  */
+
+  List<Restaurante> restaurantesEncontrados =
+      RepositorioRestaurantes().getRestaurantes();
+
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: restaurantesEncontrados.length,
       itemBuilder: (context, index) {
         return InkWell(
           child: Card(
-            child: Text(
-                "${RepositorioRestaurantes.listaRestaurantes[index].nome}"),
+            child: Text("${restaurantesEncontrados[index].nome}"),
           ),
           onTap: () {
             print(
-                "Buscar cardápio do restaurante ${RepositorioRestaurantes.listaRestaurantes[index].id}");
+                "Buscar cardápio do restaurante ${restaurantesEncontrados[index].id}");
 
             Navigator.of(context)
                 .push(DefaultRouteTransition(DetalhesRestaurante(
-              idRestaurante:
-                  RepositorioRestaurantes.listaRestaurantes[index].id,
+              idRestaurante: restaurantesEncontrados[index].id,
             )));
           },
         );
@@ -52,12 +79,14 @@ Widget buscadorRestaurantes() {
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
-          return montarListaRestaurantes();
+          return Center(child: montarListaRestaurantes());
         }
 
         /// handles others as you did on question
         else {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       });
 }
@@ -67,7 +96,22 @@ class _ListaRestaurantesState extends State<ListaRestaurantes> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      body: buscadorRestaurantes(),
-    ));
+            body: Column(
+      children: [
+        SearchBar(
+          onChanged: (value) {
+            //print(value);
+            RepositorioRestaurantes.campoBusca = value;
+
+            setState(() {});
+          },
+        ),
+        Expanded(
+          child: buscadorRestaurantes(),
+        )
+      ],
+    )));
   }
 }
+
+//buscadorRestaurantes()

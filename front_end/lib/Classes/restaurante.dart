@@ -49,6 +49,20 @@ class RepositorioRestaurantes {
       RepositorioRestaurantes._internal();
 
   static List<Restaurante> listaRestaurantes = [];
+  static String? campoBusca;
+
+  List<Restaurante> getRestaurantes() {
+    List<Restaurante> resultado = [];
+
+    if (campoBusca != null) {
+      resultado.addAll(listaRestaurantes
+          .where((restaurante) => restaurante.nome!.contains(campoBusca!)));
+    } else {
+      resultado.addAll(listaRestaurantes);
+    }
+
+    return resultado;
+  }
 
   factory RepositorioRestaurantes() {
     //init();
