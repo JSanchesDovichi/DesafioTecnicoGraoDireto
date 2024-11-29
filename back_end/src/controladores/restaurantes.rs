@@ -1,9 +1,9 @@
 use mongodb::{
-    bson::doc, Database
+    bson::{doc, Document}, Database
 };
-use rocket::{futures::StreamExt, get, routes, serde::json::Json, Route, State};
+use rocket::{futures::StreamExt, get, routes, serde::{json::Json, Deserialize, Serialize}, Route, State};
 
-use crate::{autenticacao::UsuarioLogado, models::restaurante::Restaurante};
+use crate::{autenticacao::UsuarioLogado, models::{cardapio::ItemCardapio, restaurante::{self, Restaurante, RestauranteComCardapio}}};
 
 pub fn rotas() -> Vec<Route> {
     routes![listar_restaurantes]

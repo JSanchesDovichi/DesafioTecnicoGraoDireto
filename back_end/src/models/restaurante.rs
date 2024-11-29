@@ -9,7 +9,7 @@ use super::cardapio::ItemCardapio;
 pub struct Restaurante {
     id: i32,
     posicao: i32,
-    nome: String,
+    pub nome: String,
     pontuacao: f32,
     avaliacoes: f32,
     categoria: String,
@@ -25,7 +25,7 @@ pub struct Restaurante {
 pub struct RestauranteComCardapio {
     id: i32,
     posicao: i32,
-    nome: String,
+    pub nome: String,
     pontuacao: f32,
     avaliacoes: f32,
     categoria: String,

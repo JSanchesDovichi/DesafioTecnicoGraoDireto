@@ -12,6 +12,11 @@ class Resources {
       );
   static final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
+  static bool isDark = false;
+  static final ThemeData themeData = ThemeData(
+      useMaterial3: true,
+      brightness: isDark ? Brightness.dark : Brightness.light);
+
   factory Resources() {
     return _singleton;
   }

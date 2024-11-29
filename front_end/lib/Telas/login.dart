@@ -118,6 +118,7 @@ class Login extends StatelessWidget {
         readOnly: false);
 
     return MaterialApp(
+      //theme: Resources.themeData,
       home: Scaffold(
           body: Center(
               child: Form(

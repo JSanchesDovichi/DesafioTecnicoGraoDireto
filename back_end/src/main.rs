@@ -5,7 +5,7 @@ pub mod autenticacao;
 pub mod token;
 
 use database::criar_conexao;
-use controladores::{restaurantes, cardapios};
+use controladores::{cardapios, misc, restaurantes};
 use rocket::launch;
 use rocket_cors::{CorsOptions, AllowedOrigins};
 
@@ -31,5 +31,6 @@ async fn rocket() -> _ {
     .manage(database_connection)
     .mount("/restaurantes", restaurantes::rotas())
     .mount("/restaurantes", cardapios::rotas())
+    .mount("/busca", misc::rotas())
     .mount("/", autenticacao::rotas())
 }

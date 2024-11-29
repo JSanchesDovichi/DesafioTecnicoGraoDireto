@@ -24,6 +24,20 @@ class RepositorioCardapio {
   static final RepositorioCardapio _singleton = RepositorioCardapio._internal();
 
   static List<ItemCardapio> listaItens = [];
+  static String? campoBusca;
+
+  List<ItemCardapio> getCardapio() {
+    List<ItemCardapio> resultado = [];
+
+    if (campoBusca != null) {
+      resultado.addAll(listaItens
+          .where((restaurante) => restaurante.nome!.contains(campoBusca!)));
+    } else {
+      resultado.addAll(listaItens);
+    }
+
+    return resultado;
+  }
 
   factory RepositorioCardapio() {
     return _singleton;

@@ -4,6 +4,7 @@ import 'package:front_end/Telas/detalhes_restaurante.dart';
 import 'package:front_end/Telas/login.dart';
 import 'package:front_end/Telas/restaurantes.dart';
 import 'package:front_end/Telas/sandbox.dart';
+import 'package:front_end/Utils/global_resources.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -17,8 +18,13 @@ class Driver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Login(),
+    if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
+      Resources.isDark = true;
+    }
+
+    return MaterialApp(
+      //theme: Resources.themeData,
+      home: const Login(),
     );
   }
 }
