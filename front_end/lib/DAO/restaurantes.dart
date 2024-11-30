@@ -59,4 +59,17 @@ class RestauranteDAO {
       return Failure(e);
     }
   }
+
+  Future<Result<bool, Exception>> buscaTextual(String busca) async {
+    try {
+      Response response =
+          await Connection.handler.get('/restaurantes/busca?busca=$busca');
+
+      return const Success(true);
+      //TODO: Finalizar função pensando no Design da tela.
+    } on DioException catch (e) {
+      print("Erro $e");
+      return Failure(e);
+    }
+  }
 }

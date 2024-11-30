@@ -31,6 +31,6 @@ async fn rocket() -> _ {
     .manage(database_connection)
     .mount("/restaurantes", restaurantes::rotas())
     .mount("/restaurantes", cardapios::rotas())
-    .mount("/busca", misc::rotas())
+    .mount("/restaurantes/busca", misc::rotas())
     .mount("/", autenticacao::rotas())
 }

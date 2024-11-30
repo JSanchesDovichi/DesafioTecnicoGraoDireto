@@ -4,10 +4,10 @@ use rocket::serde::{Deserialize, Serialize};
 #[serde(crate = "rocket::serde")]
 
 pub struct ItemCardapio {
-    categoria: String,
-    nome: String,
+    pub categoria: String,
+    pub nome: String,
     //descricao: Option<String>,
-    preco: String
+    pub preco: String
     /*
     categoria: String,
     nome: String,

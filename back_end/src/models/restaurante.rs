@@ -7,32 +7,32 @@ use super::cardapio::ItemCardapio;
 #[serde(crate = "rocket::serde")]
 
 pub struct Restaurante {
-    id: i32,
-    posicao: i32,
+    pub id: i32,
+    pub posicao: i32,
     pub nome: String,
-    pontuacao: f32,
-    avaliacoes: f32,
-    categoria: String,
-    endereco: String,
-    codigo_zip: String,
-    lat: f64,
-    lng: f64,
+    pub pontuacao: f32,
+    pub avaliacoes: f32,
+    pub categoria: String,
+    pub endereco: String,
+    pub codigo_zip: String,
+    pub lat: f64,
+    pub lng: f64,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(crate = "rocket::serde")]
 
 pub struct RestauranteComCardapio {
-    id: i32,
-    posicao: i32,
+    pub id: i32,
+    pub posicao: i32,
     pub nome: String,
-    pontuacao: f32,
-    avaliacoes: f32,
-    categoria: String,
-    endereco: String,
-    codigo_zip: String,
-    lat: f64,
-    lng: f64,
+    pub pontuacao: f32,
+    pub avaliacoes: f32,
+    pub categoria: String,
+    pub endereco: String,
+    pub codigo_zip: String,
+    pub lat: f64,
+    pub lng: f64,
     
     pub cardapio: Vec<ItemCardapio>
 }
