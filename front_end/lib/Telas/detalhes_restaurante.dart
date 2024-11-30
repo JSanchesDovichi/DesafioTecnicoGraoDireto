@@ -4,13 +4,13 @@ import 'package:front_end/DAO/restaurantes.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Widgets/transition.dart';
 
-class DetalhesRestaurante extends StatefulWidget {
-  const DetalhesRestaurante({super.key, required this.idRestaurante});
+class CardapioRestaurante extends StatefulWidget {
+  const CardapioRestaurante({super.key, required this.idRestaurante});
 
   final int idRestaurante;
 
   @override
-  State<DetalhesRestaurante> createState() => _DetalhesRestauranteState();
+  State<CardapioRestaurante> createState() => _CardapioRestauranteState();
 }
 
 Widget montarListaCardapio() {
@@ -36,9 +36,9 @@ Widget montarListaCardapio() {
       });
 }
 
-Widget buscadorCardapio(int idRestaurante) {
+Widget buscadorCardapio(int? idRestaurante) {
   return FutureBuilder(
-      future: RestauranteDAO().buscarCardapio(idRestaurante),
+      future: RestauranteDAO().buscarCardapio(idRestaurante!),
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
@@ -52,21 +52,34 @@ Widget buscadorCardapio(int idRestaurante) {
       });
 }
 
-class _DetalhesRestauranteState extends State<DetalhesRestaurante> {
+class _CardapioRestauranteState extends State<CardapioRestaurante> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        //theme: Resources.themeData,
-        home: Scaffold(
-            appBar: AppBar(
+      home: Scaffold(
+          appBar: AppBar(
               leading: IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.arrow_back)),
-            ),
-            body: Column(
-              children: [
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ))),
+          body: Column(
+            children: [
+              Expanded(
+                child: buscadorCardapio(widget.idRestaurante),
+              )
+            ],
+          )),
+    );
+
+    /*
+    return Column(
+
+      children: [
+        /*
                 SearchBar(
                   onChanged: (value) {
                     //print(value);
@@ -75,10 +88,12 @@ class _DetalhesRestauranteState extends State<DetalhesRestaurante> {
                     setState(() {});
                   },
                 ),
-                Expanded(
-                  child: buscadorCardapio(widget.idRestaurante),
-                )
-              ],
-            )));
+                */
+        Expanded(
+          child: buscadorCardapio(widget.idRestaurante),
+        )
+      ],
+    );
+    */
   }
 }

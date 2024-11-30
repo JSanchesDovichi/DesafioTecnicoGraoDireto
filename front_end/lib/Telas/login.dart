@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/DAO/Usuario.dart';
 import 'package:front_end/Telas/detalhes_restaurante.dart';
-import 'package:front_end/Telas/restaurantes.dart';
+import 'package:front_end/Telas/dashboard.dart';
 import 'package:front_end/Utils/Crypto.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Utils/result.dart';
@@ -46,7 +46,7 @@ class Login extends StatelessWidget {
 
       if (await Resources.storage.read(key: 'jwt_token') != null) {
         //context.go('/restaurantes');
-        Navigator.of(context).push(DefaultRouteTransition(ListaRestaurantes()));
+        Navigator.of(context).push(DefaultRouteTransition(Dashboard()));
       }
     }
 
@@ -182,7 +182,7 @@ class Login extends StatelessWidget {
                             ),
                           )
                         ],
-                      )
+                      ),
                     ],
                   )))),
     );
