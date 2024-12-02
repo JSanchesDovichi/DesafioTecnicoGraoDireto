@@ -34,7 +34,7 @@ Widget montarListaRestaurantes(int paginaSelecionada) {
   return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(children: [
-        Text("Restaurantes"),
+        //Text("Restaurantes"),
         Wrap(
           spacing: 12.0, // gap between adjacent chips
           runSpacing: 4.0, // gap between lines
@@ -53,7 +53,31 @@ Widget buscadorRestaurantes(int paginaSelecionada) {
         builder: (context, snapshot) {
           if (snapshot.hasData &&
               snapshot.connectionState == ConnectionState.done) {
-            return Center(child: montarListaRestaurantes(paginaSelecionada));
+            Set<String> categoriasEncontradas = {};
+
+            for (Restaurante restaurante
+                in RepositorioRestaurantes().getRestaurantes()) {
+              //print(restaurante);
+              categoriasEncontradas.add(restaurante.categoria);
+            }
+
+            return Center(
+                child: Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Text(
+                  "Categorias",
+                  style: TextStyle(color: Colors.white, fontSize: 40),
+                ),
+              ]),
+              Text("${categoriasEncontradas.toString()}"),
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Text(
+                  "Restaurantes",
+                  style: TextStyle(color: Colors.white, fontSize: 40),
+                ),
+              ]),
+              montarListaRestaurantes(paginaSelecionada)
+            ]));
           }
 
           /// handles others as you did on question

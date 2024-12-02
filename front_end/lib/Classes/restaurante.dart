@@ -19,10 +19,10 @@ import 'package:front_end/Utils/result.dart';
 class Restaurante {
   final int id;
   final int posicao;
-  final String? nome;
+  final String nome;
   final double? pontuacao;
   final int? avaliacoes;
-  final String? categoria;
+  final String categoria;
   final String? endereco;
   final String? codigoZip;
   final double lat;
@@ -34,10 +34,10 @@ class Restaurante {
   Restaurante.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int,
         posicao = json['posicao'] as int,
-        nome = json['nome'] as String?,
+        nome = json['nome'] as String,
         pontuacao = json['pontuacao'] as double?,
         avaliacoes = json['avaliacoes'] as int?,
-        categoria = json['categoria'] as String?,
+        categoria = json['categoria'] as String,
         endereco = json['endereco'] as String?,
         codigoZip = json['codizo_zip'] as String?,
         lat = json['lat'] as double,
@@ -56,7 +56,7 @@ class RepositorioRestaurantes {
 
     if (campoBusca != null) {
       resultado.addAll(listaRestaurantes
-          .where((restaurante) => restaurante.nome!.contains(campoBusca!)));
+          .where((restaurante) => restaurante.nome.contains(campoBusca!)));
     } else {
       resultado.addAll(listaRestaurantes);
     }
