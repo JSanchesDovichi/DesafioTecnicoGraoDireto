@@ -4,6 +4,8 @@ import 'package:front_end/Telas/detalhes_restaurante.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Widgets/transition.dart';
 
+const double tileWidth = 150.0;
+
 class TileRestaurente extends StatelessWidget {
   const TileRestaurente({super.key, required this.restaurante});
 
@@ -23,7 +25,7 @@ class TileRestaurente extends StatelessWidget {
               margin: const EdgeInsets.only(top: 20.0),
               child: SizedBox(
                   height: 100.0,
-                  width: 150.0,
+                  width: tileWidth,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 45.0),
                     child: Column(
