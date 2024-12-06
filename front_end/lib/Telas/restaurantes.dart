@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/Classes/restaurante.dart';
 import 'package:front_end/DAO/restaurantes.dart';
+import 'package:front_end/Widgets/tile_categoria.dart';
 import 'package:front_end/Widgets/tile_restaurante.dart';
 
 class Restaurantes extends StatefulWidget {
@@ -17,6 +18,31 @@ class _RestaurantesState extends State<Restaurantes> {
   Widget build(BuildContext context) {
     return buscadorRestaurantes(paginaSelecionada);
   }
+}
+
+Widget montarListaCategorias(Set<String> categoriasEncontradas) {
+  //List<Restaurante> restaurantesEncontrados = RepositorioRestaurantes().getRestaurantes();
+
+  List<Widget> tilesCategorias = [];
+
+  for (String categoria in categoriasEncontradas) {
+    tilesCategorias.add(TileCategoria(
+      categoria: categoria,
+    ));
+  }
+
+  return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(children: [
+        //Text("Restaurantes"),
+        //...tilesCategorias
+        Wrap(
+          spacing: 12.0, // gap between adjacent chips
+          runSpacing: 4.0, // gap between lines
+
+          children: tilesCategorias,
+        )
+      ]));
 }
 
 Widget montarListaRestaurantes(int paginaSelecionada) {
@@ -69,7 +95,12 @@ Widget buscadorRestaurantes(int paginaSelecionada) {
                   style: TextStyle(color: Colors.white, fontSize: 40),
                 ),
               ]),
-              Text("${categoriasEncontradas.toString()}"),
+              Padding(
+                child: montarListaCategorias(categoriasEncontradas),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 60,
+                ),
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Text(
                   "Restaurantes",
