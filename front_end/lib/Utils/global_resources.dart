@@ -19,12 +19,16 @@ class Resources {
 
   //static Function atualizarTelaDashboard = () {};
 
-  /*
   static bool isDark = false;
-  static final ThemeData themeData = ThemeData(
+  static ThemeData themeData = ThemeData(
       useMaterial3: true,
       brightness: isDark ? Brightness.dark : Brightness.light);
-  */
+
+  static setThemeData() {
+    themeData = ThemeData(
+        useMaterial3: true,
+        brightness: isDark ? Brightness.dark : Brightness.light);
+  }
 
   factory Resources() {
     return _singleton;

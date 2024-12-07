@@ -4,8 +4,6 @@ import 'package:front_end/Telas/detalhes_restaurante.dart';
 import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Widgets/transition.dart';
 
-const double tileWidth = 150.0;
-
 class TileRestaurente extends StatelessWidget {
   const TileRestaurente({super.key, required this.restaurante});
 
@@ -25,14 +23,14 @@ class TileRestaurente extends StatelessWidget {
               margin: const EdgeInsets.only(top: 20.0),
               child: SizedBox(
                   height: 100.0,
-                  width: tileWidth,
+                  width: 150.0,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 45.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          restaurante.nome!,
+                          restaurante.nome,
                           maxLines: 2,
                           textAlign: TextAlign.center,
                           //style: Theme.of(context).textTheme.subhead,
@@ -47,6 +45,7 @@ class TileRestaurente extends StatelessWidget {
               left: .0,
               right: .0,
               child: Center(
+                //child:
                 child: CircleAvatar(
                   radius: 30.0,
                   child: Text("D"),

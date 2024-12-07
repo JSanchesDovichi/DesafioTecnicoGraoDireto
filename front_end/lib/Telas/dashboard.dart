@@ -48,15 +48,26 @@ class _DashboardState extends State<Dashboard> {
     }
 
     return MaterialApp(
-        //theme: Resources.themeData,
+        theme: Resources.themeData,
         home: Scaffold(
             appBar: AppBar(
+              leading: Switch.adaptive(
+                  activeColor: Colors.green.shade100,
+                  value: Resources.isDark,
+                  onChanged: (value) {
+                    setState(() {
+                      Resources.isDark = value;
+
+                      Resources.setThemeData();
+                    });
+                  }),
               toolbarHeight: 35,
               title: Row(
                 children: [
                   Text(
                     "foo",
-                    style: TextStyle(color: Colors.black, fontSize: 30),
+                    style: TextStyle(
+                        color: Resources.themeData.dividerColor, fontSize: 30),
                   ),
                   Text(
                     "direto",
@@ -66,46 +77,15 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             body: Container(
+                height: double.infinity,
                 decoration: const BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10.0),
                         topRight: Radius.circular(10.0))),
                 //color: Colors.green,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: telaSelecionada,
-                    ),
-                    /*
-                    NavigationRail(
-                      groupAlignment: 0.0,
-                      //extended: true,
-                      minExtendedWidth: 125,
-
-                      //backgroundColor: Colors.black,
-                      selectedIndex: selectedIndex,
-                      onDestinationSelected: (int index) {
-                        //selectedIndex = index;
-
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      labelType: NavigationRailLabelType.all,
-                      destinations: [
-                        NavigationRailDestination(
-                            icon: Icon(Icons.restaurant),
-                            label: Text("Restaurantes")),
-                        NavigationRailDestination(
-                            icon: Icon(Icons.search), label: Text("Buscar")),
-                        NavigationRailDestination(
-                            icon: Icon(Icons.settings), label: Text("Ajustes")),
-                      ],
-                    ),
-                    */
-                  ],
+                child: SingleChildScrollView(
+                  child: telaSelecionada,
                 ))));
   }
 }

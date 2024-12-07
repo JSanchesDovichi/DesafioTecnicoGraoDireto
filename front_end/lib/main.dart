@@ -18,14 +18,12 @@ class Driver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
     if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
       Resources.isDark = true;
     }
-    */
 
     return MaterialApp(
-      //theme: Resources.themeData,
+      theme: Resources.themeData,
       home: const Login(),
     );
   }

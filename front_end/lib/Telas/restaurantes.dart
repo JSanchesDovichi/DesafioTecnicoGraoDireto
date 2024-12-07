@@ -57,10 +57,17 @@ Widget montarListaRestaurantes(int paginaSelecionada) {
     ));
   }
 
+  return Wrap(
+    spacing: 12.0, // gap between adjacent chips
+    runSpacing: 4.0, // gap between lines
+    children: tilesRestaurantes,
+  );
+
+  /*
   return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(children: [
-        //Text("Restaurantes"),
+        Text("Restaurantes"),
         Wrap(
           spacing: 12.0, // gap between adjacent chips
           runSpacing: 4.0, // gap between lines
@@ -68,6 +75,7 @@ Widget montarListaRestaurantes(int paginaSelecionada) {
           children: tilesRestaurantes,
         )
       ]));
+      */
 }
 
 Widget buscadorRestaurantes(int paginaSelecionada) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:front_end/Utils/global_resources.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Widget caixaInput(
     {required TextEditingController controlador,
@@ -17,14 +19,17 @@ Widget caixaInput(
   return ConstrainedBox(
     constraints: const BoxConstraints(maxWidth: 350),
     child: TextFormField(
+        style: GoogleFonts.poppins(color: Resources.themeData.indicatorColor),
         obscureText: obscureText,
         readOnly: readOnly,
         controller: controlador,
         inputFormatters: formatters,
         decoration: InputDecoration(
+            floatingLabelStyle: GoogleFonts.poppins(),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Colors.black12,
+                    //color: Colors.black12,
+                    color: Resources.themeData.highlightColor,
                     /*
                     color: Resources.isDarkModeEnabled == true
                         ? Temas.temaAtual().secondaryHeaderColor
@@ -33,7 +38,7 @@ Widget caixaInput(
                     width: 2)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Colors.black,
+                    color: Resources.themeData.highlightColor,
                     /*
                     color: Resources.isDarkModeEnabled == true
                         ? Temas.temaAtual().primaryColor

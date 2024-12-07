@@ -8,32 +8,16 @@ import 'package:front_end/Utils/global_resources.dart';
 import 'package:front_end/Utils/result.dart';
 import 'package:front_end/Widgets/input.dart';
 import 'package:front_end/Widgets/transition.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-/*
-Route _RouteTransition() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const ListaRestaurantes(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
-*/
-
-class Login extends StatelessWidget {
-  /// Constructs a [MyApp]
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final chaveIdentificacaoForm = GlobalKey<FormState>();
@@ -118,8 +102,21 @@ class Login extends StatelessWidget {
         readOnly: false);
 
     return MaterialApp(
-      //theme: Resources.themeData,
+      theme: Resources.themeData,
       home: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Switch.adaptive(
+                activeColor: Colors.green.shade100,
+                value: Resources.isDark,
+                onChanged: (value) {
+                  setState(() {
+                    Resources.isDark = value;
+
+                    Resources.setThemeData();
+                  });
+                }),
+          ),
           body: Center(
               child: Form(
                   key: chaveIdentificacaoForm,
@@ -128,7 +125,10 @@ class Login extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Textos.tituloPagina('Entrar'),
-                      Text("Bem vindo de volta!"),
+                      Text(
+                        "Bem vindo de volta!",
+                        style: GoogleFonts.poppins(fontSize: 30),
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(top: 12),
                       ),
@@ -141,9 +141,21 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20),
                         child: ElevatedButton(
                           onPressed: enviarDadosLogin,
+
+                          style: ButtonStyle(
+                              shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                              backgroundColor: WidgetStatePropertyAll(
+                                  Colors.green.shade600)),
                           //style: estiloBotaoGrande(),
+
                           child: Text(
                             'Acessar!',
+                            style: GoogleFonts.poppins(
+                                color: Resources.themeData.indicatorColor),
                             /*
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(
@@ -170,12 +182,6 @@ class Login extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: null,
-                            /*
-                  onPressed: () {
-                    Navigator.of(Resources.navigatorKey.currentContext!)
-                        .pushNamed(CadastroUsuarios.route);
-                  },
-                  */
                             child: Text(
                               'Inscreva-se',
                               //style: Temas.estiloTextoPequeno()
@@ -187,29 +193,4 @@ class Login extends StatelessWidget {
                   )))),
     );
   }
-
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const CircularProgressIndicator(),
-        ElevatedButton(
-            /*
-            onPressed: () async {
-              FormData test = FormData.fromMap({
-                "username": "juregue",
-                "password": "JuregueDaSilva",
-              });
-              UsuarioDAO().login(test).then((resposta) => {print(resposta)});
-            },
-            */
-            onPressed: null,
-            child: const Text("Testar conexão!")),
-      ],
-    ));
-  }
-  */
 }
