@@ -32,6 +32,7 @@ SECRET_KEY=""
 * SECRET_KEY: Chave de segurança para criptografia na API do projeto. Use o comando 'openssl rand -base64 32' para gerar essa chave.
 
 *  Na raiz do projeto execute o comando 'docker compose up -d --build', com isso, o banco de dados do projeto será iniciado, e ficará rodando em segundo plano.
+* Entre na pasta dataset_importer e execute o comando 'poetry shell', após isso, use o comando 'poetry run python dataset_importer/__init__.py' para importar o dataset para o banco de dados.
 * Entre na pasta back_end e execute o comando 'cargo run' para iniciar a API do projeto.
 * Entre na pasta front_end e execute os comandos para iniciar o front end: 
 ```sh
